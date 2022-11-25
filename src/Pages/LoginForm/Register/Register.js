@@ -1,46 +1,124 @@
 import React from "react";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../assets/login-ani.json";
+import { Link } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
   return (
-    <div className="hero min-h-screen login-container">
-      <div className="hero-content grid grid-cols-1 lg:grid-cols-2">
-        <div className="text-center lg:text-left">
+    <div className="login-container pt-2 pb-40">
+      <div className="w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2">
+        <div className="hidden lg:block">
           <Lottie animationData={loginAnimation} loop={true} />
         </div>
-        <div className="card w-3/4 lg:ml-40 ml-20 shadow-2xl bg-purple-300">
-          <h1 className="text-3xl font-bold text-center py-6">Register</h1>
-          <form className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="text"
-                placeholder="email"
-                className="input input-bordered bg-transparent"
-              />
+        <div className="md:w-3/4 w-full mx-auto mt-4 ">
+          <div className="mt-2 rounded-lg shadow-lg p-10 bg-purple-300">
+            <h1 className="text-4xl text-primary font-bold mt-4 text-center">
+              Welcome
+            </h1>
+            {/* Login form  */}
+            <form>
+              <div className="">
+                {/* Name Field  */}
+                <div className="form-control py-2">
+                  <label className="label">
+                    <span className="label-text text-md font-semibold text-gray-700">
+                      Your Email
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+
+                {/* Select options */}
+                <label className="label">
+                  <span className="label-text text-md font-semibold text-gray-700">
+                    Select One
+                  </span>
+                </label>
+                <select className="select select-bordered w-full">
+                  <option disabled selected>
+                    Select
+                  </option>
+                  <option>User</option>
+                  <option>Seller</option>
+                </select>
+                {/* Email Field  */}
+                <div className="form-control py-2">
+                  <label className="label">
+                    <span className="label-text text-md font-semibold text-gray-700">
+                      Your Email
+                    </span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="info@site.com"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+
+                {/* Password field  */}
+                <div className="form-control py-2">
+                  <label className="label">
+                    <span className="label-text text-md font-semibold text-gray-700">
+                      Your Password
+                    </span>
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="********"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+
+                <div className="flex justify-between py-2">
+                  <div className="flex">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-accent mr-2"
+                    />
+                    <p className="text-sm md:text-md">
+                      Accept Terms and Conditions
+                    </p>
+                  </div>
+                </div>
+
+                {/* Login button  */}
+                <div>
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-800 hover:to-blue-700   py-3 w-full text-white font-semibold mt-4 rounded"
+                  >
+                    LOGIN
+                  </button>
+                </div>
+                <div className="pt-4 text-right">
+                  <p>
+                    <Link to="/login" className="text-primary">
+                      Already have an account?
+                    </Link>
+                  </p>
+                </div>
+                <div className="divider">OR</div>
+              </div>
+            </form>
+            {/* sign in with social platform */}
+            <div className="text-center my-4">
+              <button className="px-6 btn btn-outline btn-primary">
+                <FaGoogle className="text-2xl mr-2" />
+                continue with Google
+              </button>
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="text"
-                placeholder="password"
-                className="input input-bordered bg-transparent"
-              />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
