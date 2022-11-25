@@ -1,9 +1,11 @@
 import Lottie from "lottie-react";
 import React from "react";
 import loginAnimation from "../../../assets/login-ani.json";
+import useTitle from "../../../Hooks/useTitle";
 import "./Login.css";
 
 const Login = () => {
+  useTitle("Login");
   return (
     <div className="hero min-h-screen login-container">
       <div className="hero-content grid grid-cols-1 lg:grid-cols-2">
