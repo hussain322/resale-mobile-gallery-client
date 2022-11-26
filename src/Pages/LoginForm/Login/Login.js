@@ -1,13 +1,39 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import loginAnimation from "../../../assets/login-ani.json";
 import useTitle from "../../../Hooks/useTitle";
 import "./Login.css";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
   useTitle("Login");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const [error, setError] = useState("");
+  const { login } = useContext(AuthContext);
+
+  const handleLogin = (data) => {
+    console.log(data);
+    //Login
+    login(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setError("");
+        toast.success("Account Logged Successfully");
+      })
+      .catch((error) => {
+        setError(error.code.slice(5));
+      });
+  };
   return (
     <div className="login-container pt-2 pb-40">
       <div className="w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2">
@@ -20,7 +46,7 @@ const Login = () => {
               Welcome
             </h1>
             {/* Login form  */}
-            <form>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <div className="">
                 {/* Email Field  */}
                 <div className="form-control py-2">
@@ -30,13 +56,17 @@ const Login = () => {
                     </span>
                   </label>
                   <input
+                    {...register("email", {
+                      required: "Email field is required",
+                    })}
                     type="email"
-                    name="email"
                     placeholder="info@site.com"
                     className="input input-bordered"
-                    required
                   />
                 </div>
+                {errors.email && (
+                  <p className="text-red-500">{errors.email?.message}</p>
+                )}
 
                 {/* Password field  */}
                 <div className="form-control py-2">
@@ -46,13 +76,17 @@ const Login = () => {
                     </span>
                   </label>
                   <input
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                     type="password"
-                    name="password"
                     placeholder="********"
                     className="input input-bordered"
-                    required
                   />
                 </div>
+                {errors.password && (
+                  <p className="text-red-500">{errors.password?.message}</p>
+                )}
 
                 <div className="flex justify-between py-2">
                   <div className="flex">
@@ -70,6 +104,7 @@ const Login = () => {
                 </div>
 
                 {/* Login button  */}
+                <p className="text-red-500">{error}</p>
                 <div>
                   <button
                     type="submit"
@@ -80,7 +115,7 @@ const Login = () => {
                 </div>
                 <div className="pt-4 text-right">
                   <p>
-                    Not registered?{" "}
+                    Not registered?
                     <Link to="/register" className="text-primary">
                       Create account
                     </Link>

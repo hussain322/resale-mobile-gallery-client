@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../assets/login-ani.json";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [error, setError] = useState("");
+  const { createUser, updateUser } = useContext(AuthContext);
+
+  const handleLogin = (data) => {
+    console.log(data);
+    createUser(data.email, data.password)
+      .then((result) => {
+        setError("");
+        const user = result.user;
+        console.log(user);
+        toast.success("Account created successfully");
+
+        const userInfo = {
+          displayName: data.name,
+          category: data.category,
+        };
+
+        updateUser(userInfo)
+          .then(() => {})
+          .catch((err) => console.error(err));
+      })
+      .catch((error) => {
+        setError(error.code.slice(5));
+      });
+  };
+
   return (
     <div className="login-container pt-2 pb-40">
       <div className="w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2">
@@ -17,7 +52,7 @@ const Register = () => {
               Welcome
             </h1>
             {/* Login form  */}
-            <form>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <div className="">
                 {/* Name Field  */}
                 <div className="form-control py-2">
@@ -27,13 +62,16 @@ const Register = () => {
                     </span>
                   </label>
                   <input
-                    type="text"
-                    name="name"
+                    {...register("name", {
+                      required: "Name field is required",
+                    })}
                     placeholder="Your Name"
                     className="input input-bordered"
-                    required
                   />
                 </div>
+                {errors.name && (
+                  <p className="text-red-500">{errors.name?.message}</p>
+                )}
 
                 {/* Select options */}
                 <label className="label">
@@ -41,12 +79,12 @@ const Register = () => {
                     Select One
                   </span>
                 </label>
-                <select className="select select-bordered w-full">
-                  <option disabled selected>
-                    Select
-                  </option>
-                  <option>User</option>
-                  <option>Seller</option>
+                <select
+                  {...register("category", { required: true })}
+                  className="select select-bordered w-full"
+                >
+                  <option value="user">User</option>
+                  <option value="seller">Seller</option>
                 </select>
                 {/* Email Field  */}
                 <div className="form-control py-2">
@@ -56,13 +94,17 @@ const Register = () => {
                     </span>
                   </label>
                   <input
+                    {...register("email", {
+                      required: "Email Field is required",
+                    })}
                     type="email"
-                    name="email"
                     placeholder="info@site.com"
                     className="input input-bordered"
-                    required
                   />
                 </div>
+                {errors.email && (
+                  <p className="text-red-500">{errors.email?.message}</p>
+                )}
 
                 {/* Password field  */}
                 <div className="form-control py-2">
@@ -72,13 +114,25 @@ const Register = () => {
                     </span>
                   </label>
                   <input
-                    type="password"
-                    name="password"
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be 6 character or long",
+                      },
+                      pattern: {
+                        value: /(?=.*?[A-Z])/,
+                        message: "Must use one Uppercase",
+                      },
+                    })}
                     placeholder="********"
+                    type="password"
                     className="input input-bordered"
-                    required
                   />
                 </div>
+                {errors.password && (
+                  <p className="text-red-500">{errors.password?.message}</p>
+                )}
 
                 <div className="flex justify-between py-2">
                   <div className="flex">
@@ -93,12 +147,13 @@ const Register = () => {
                 </div>
 
                 {/* Login button  */}
+                <p className="text-red-500">{error}</p>
                 <div>
                   <button
                     type="submit"
                     className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-800 hover:to-blue-700   py-3 w-full text-white font-semibold mt-4 rounded"
                   >
-                    LOGIN
+                    REGISTER
                   </button>
                 </div>
                 <div className="pt-4 text-right">

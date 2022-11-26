@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        toast("Account Logged Out");
+      })
+      .catch((err) => toast.error(err));
+  };
   const menuItems = (
     <>
       <li className="font-semibold">
         <Link to="/">Home</Link>
-      </li>
-      <li className="font-semibold">
-        <Link to="/login">Login</Link>
       </li>
       <li className="font-semibold">
         <Link to="/blog">Blog</Link>
@@ -39,7 +47,7 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-gradient-to-r from-[#7234b3] to-[#873cd6] rounded-box w-52"
             >
               {menuItems}
             </ul>
@@ -52,7 +60,15 @@ const Header = () => {
           <ul className="menu menu-horizontal p-0">{menuItems}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Get started</a>
+          {user?.uid ? (
+            <button onClick={handleLogOut} className="btn">
+              Log out
+            </button>
+          ) : (
+            <Link to="/login" className="btn">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
