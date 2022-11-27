@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import BuyNowModal from "../BuyNowModal/BuyNowModal";
 import PhoneCard from "./PhoneCard";
 
 const Phones = () => {
   const category = useLoaderData();
-  console.log(category);
+  const [phoneDetails, setPhoneDetails] = useState(null);
 
   const { data: phones = [] } = useQuery({
     queryKey: ["category"],
@@ -24,9 +26,14 @@ const Phones = () => {
       </h1>
       <div className="w-[90%] mx-auto py-20 grid grid-cols-1 gap-10">
         {categoryPhones.map((phone) => (
-          <PhoneCard key={phone._id} phone={phone} />
+          <PhoneCard
+            key={phone._id}
+            phone={phone}
+            setPhoneDetails={setPhoneDetails}
+          />
         ))}
       </div>
+      {phoneDetails && <BuyNowModal phoneDetails={phoneDetails}></BuyNowModal>}
     </div>
   );
 };

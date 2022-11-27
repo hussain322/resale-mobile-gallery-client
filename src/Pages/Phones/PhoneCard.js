@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
-const PhoneCard = ({ phone }) => {
+const PhoneCard = ({ phone, setPhoneDetails }) => {
+  const { user } = useContext(AuthContext);
   const {
     name,
     location,
@@ -34,7 +36,11 @@ const PhoneCard = ({ phone }) => {
             </p>
           </div>
           <div className="mt-6">
-            <label htmlFor="buy-now-modal" className="btn btn-primary px-10">
+            <label
+              onClick={() => setPhoneDetails(phone)}
+              htmlFor="buy-now-modal"
+              className="btn btn-primary px-10"
+            >
               Buy Now
             </label>
           </div>
