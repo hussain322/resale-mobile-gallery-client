@@ -33,7 +33,12 @@ const Phones = () => {
           />
         ))}
       </div>
-      {phoneDetails && <BuyNowModal phoneDetails={phoneDetails}></BuyNowModal>}
+      {phoneDetails && (
+        <BuyNowModal
+          setPhoneDetails={setPhoneDetails}
+          phoneDetails={phoneDetails}
+        ></BuyNowModal>
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
   useTitle("Login");
@@ -18,10 +19,12 @@ const Login = () => {
   } = useForm();
 
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext);
+  const { login, googleLogIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const googleProvider = new GoogleAuthProvider();
 
   const from = location.state?.from?.pathname || "/";
 
@@ -39,6 +42,16 @@ const Login = () => {
       .catch((error) => {
         setError(error.code.slice(5));
       });
+  };
+
+  //Google Login
+  const handleGoogleLogin = () => {
+    googleLogIn(googleProvider)
+      .then((result) => {
+        toast.success("Successfully Logged in!");
+        navigate(from, { replace: true });
+      })
+      .catch((err) => toast.error(err.code.slice(5)));
   };
   return (
     <div className="login-container pt-2 pb-40">
@@ -132,7 +145,10 @@ const Login = () => {
             </form>
             {/* sign in with social platform */}
             <div className="text-center my-4">
-              <button className="px-6 btn btn-outline btn-primary">
+              <button
+                onClick={handleGoogleLogin}
+                className="px-6 btn btn-outline btn-primary"
+              >
                 <FaGoogle className="text-2xl mr-2" />
                 continue with Google
               </button>

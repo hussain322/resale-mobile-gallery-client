@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
-const BuyNowModal = ({ phoneDetails }) => {
+const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
   const { user } = useContext(AuthContext);
   const { name, resalePrice } = phoneDetails;
 
@@ -25,6 +25,7 @@ const BuyNowModal = ({ phoneDetails }) => {
     };
 
     console.log(buyNow);
+    setPhoneDetails(null);
   };
   return (
     <div>

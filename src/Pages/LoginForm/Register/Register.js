@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import useTitle from "../../../Hooks/useTitle";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
   useTitle("Register");
@@ -17,9 +18,11 @@ const Register = () => {
   } = useForm();
 
   const [error, setError] = useState("");
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, googleLogIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const googleProvider = new GoogleAuthProvider();
 
   const from = location.state?.from?.pathname || "/";
 
@@ -45,6 +48,16 @@ const Register = () => {
       .catch((error) => {
         setError(error.code.slice(5));
       });
+  };
+
+  //Google Login
+  const handleGoogleLogin = () => {
+    googleLogIn(googleProvider)
+      .then((result) => {
+        toast.success("Successfully Logged in!");
+        navigate(from, { replace: true });
+      })
+      .catch((err) => toast.error(err.code.slice(5)));
   };
 
   return (
@@ -175,7 +188,10 @@ const Register = () => {
             </form>
             {/* sign in with social platform */}
             <div className="text-center my-4">
-              <button className="px-6 btn btn-outline btn-primary">
+              <button
+                onClick={handleGoogleLogin}
+                className="px-6 btn btn-outline btn-primary"
+              >
                 <FaGoogle className="text-2xl mr-2" />
                 continue with Google
               </button>
