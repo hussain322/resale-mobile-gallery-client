@@ -1,15 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData } from "react-router-dom";
+import PhoneCard from "./PhoneCard";
 
 const Phones = () => {
-  // const { data } = useQuery({
-  //   queryKey: ["category"],
-  //   queryFn: () =>
-  //     fetch(`http://localhost:5000/category/${data._id}`).then((res) =>
-  //       res.json()
-  //     ),
-  // });
-  // console.log(data);
   const category = useLoaderData();
   console.log(category);
 
@@ -25,9 +18,15 @@ const Phones = () => {
   console.log(categoryPhones);
 
   return (
-    <div>
-      <h1 className="text-6xl text-center mt-20">{category.category_title}</h1>
-      <div>{}</div>
+    <div className="bg-purple-200">
+      <h1 className="text-4xl text-center pt-20 font-semibold">
+        {category.category_title}
+      </h1>
+      <div className="w-[90%] mx-auto py-20 grid grid-cols-1 gap-10">
+        {categoryPhones.map((phone) => (
+          <PhoneCard key={phone._id} phone={phone} />
+        ))}
+      </div>
     </div>
   );
 };
