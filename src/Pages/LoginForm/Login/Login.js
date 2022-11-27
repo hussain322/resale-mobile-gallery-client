@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginAnimation from "../../../assets/login-ani.json";
 import useTitle from "../../../Hooks/useTitle";
 import "./Login.css";
@@ -20,6 +20,11 @@ const Login = () => {
   const [error, setError] = useState("");
   const { login } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
   const handleLogin = (data) => {
     console.log(data);
     //Login
@@ -29,6 +34,7 @@ const Login = () => {
         console.log(user);
         setError("");
         toast.success("Account Logged Successfully");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         setError(error.code.slice(5));

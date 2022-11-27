@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CategoryCard = ({ category }) => {
-  const { category_id, category_name, img } = category;
+  const { _id, category_name, img, category_title } = category;
   return (
     <div className="card w-full glass">
       <figure>
@@ -9,9 +10,11 @@ const CategoryCard = ({ category }) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title text-white">{category_name}</h2>
-        <p>How to park your car at your garage?</p>
+        <p className="text-slate-300">{category_title}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Learn now!</button>
+          <Link to={`/category/${_id}`} className="btn btn-primary">
+            Learn now!
+          </Link>
         </div>
       </div>
     </div>

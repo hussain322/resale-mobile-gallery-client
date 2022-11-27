@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../assets/login-ani.json";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import useTitle from "../../../Hooks/useTitle";
 
 const Register = () => {
+  useTitle("Register");
   const {
     register,
     handleSubmit,
@@ -16,6 +18,10 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const { createUser, updateUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = (data) => {
     console.log(data);
@@ -25,6 +31,7 @@ const Register = () => {
         const user = result.user;
         console.log(user);
         toast.success("Account created successfully");
+        navigate(from, { replace: true });
 
         const userInfo = {
           displayName: data.name,
