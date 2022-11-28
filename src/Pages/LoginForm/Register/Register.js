@@ -42,11 +42,28 @@ const Register = () => {
         };
 
         updateUser(userInfo)
-          .then(() => {})
+          .then(() => {
+            saveUserInfo(data.email, userInfo);
+          })
           .catch((err) => console.error(err));
       })
       .catch((error) => {
         setError(error.code.slice(5));
+      });
+  };
+
+  const saveUserInfo = (email, userInfo) => {
+    const user = { email, userInfo };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
       });
   };
 
@@ -103,7 +120,7 @@ const Register = () => {
                   {...register("category", { required: true })}
                   className="select select-bordered w-full"
                 >
-                  <option value="user">User</option>
+                  <option value="buyer">Buyer</option>
                   <option value="seller">Seller</option>
                 </select>
                 {/* Email Field  */}

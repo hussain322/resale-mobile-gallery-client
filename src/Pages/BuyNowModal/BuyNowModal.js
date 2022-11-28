@@ -4,7 +4,7 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
   const { user } = useContext(AuthContext);
-  const { name, resalePrice, _id } = phoneDetails;
+  const { name, resalePrice, _id, img } = phoneDetails;
 
   const handleModalSubmit = (event) => {
     event.preventDefault();
@@ -24,6 +24,7 @@ const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
       price,
       phoneNumber: phone,
       location,
+      img,
     };
 
     console.log(buyNow);
