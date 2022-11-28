@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
   const { user } = useContext(AuthContext);
-  const { name, resalePrice } = phoneDetails;
+  const { name, resalePrice, _id } = phoneDetails;
 
   const handleModalSubmit = (event) => {
     event.preventDefault();
@@ -16,6 +17,7 @@ const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
     const location = form.location.value;
 
     const buyNow = {
+      _id,
       customerName: name,
       email,
       productName,
@@ -25,7 +27,21 @@ const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
     };
 
     console.log(buyNow);
-    setPhoneDetails(null);
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(buyNow),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("You Successfully buying this phone");
+        }
+        setPhoneDetails(null);
+      });
   };
   return (
     <div>

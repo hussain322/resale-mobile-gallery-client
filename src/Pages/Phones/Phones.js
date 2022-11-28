@@ -15,7 +15,7 @@ const Phones = () => {
   });
   console.log(phones);
   const categoryPhones = phones.filter(
-    (p) => p.category_id === category.category_id
+    (p) => p.categoryName === category.categoryName
   );
   console.log(categoryPhones);
 
