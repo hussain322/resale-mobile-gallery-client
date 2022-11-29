@@ -8,6 +8,7 @@ import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import useTitle from "../../../Hooks/useTitle";
 import { GoogleAuthProvider } from "firebase/auth";
+import useToken from "../../../Hooks/useToken";
 
 const Register = () => {
   useTitle("Register");
@@ -20,11 +21,19 @@ const Register = () => {
   const [error, setError] = useState("");
   const { createUser, updateUser, googleLogIn } = useContext(AuthContext);
   const location = useLocation();
-  const navigate = useNavigate();
 
   const googleProvider = new GoogleAuthProvider();
 
   const from = location.state?.from?.pathname || "/";
+
+  //verify jwt token
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
+  const navigate = useNavigate();
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const handleLogin = (data) => {
     console.log(data);
@@ -34,7 +43,6 @@ const Register = () => {
         const user = result.user;
         console.log(user);
         toast.success("Account created successfully");
-        navigate(from, { replace: true });
 
         const userInfo = {
           displayName: data.name,
@@ -43,7 +51,7 @@ const Register = () => {
 
         updateUser(userInfo)
           .then(() => {
-            saveUserInfo(data.email, userInfo);
+            saveUserInfo(data.email, data.name, data.category);
           })
           .catch((err) => console.error(err));
       })
@@ -52,8 +60,8 @@ const Register = () => {
       });
   };
 
-  const saveUserInfo = (email, userInfo) => {
-    const user = { email, userInfo };
+  const saveUserInfo = (email, name, category) => {
+    const user = { email, name, category };
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
@@ -64,6 +72,7 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setCreatedUserEmail(email);
       });
   };
 
@@ -95,7 +104,7 @@ const Register = () => {
                 <div className="form-control py-2">
                   <label className="label">
                     <span className="label-text text-md font-semibold text-gray-700">
-                      Your Email
+                      Your Name
                     </span>
                   </label>
                   <input

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
+import useToken from "../../../Hooks/useToken";
 
 const Login = () => {
   useTitle("Login");
@@ -21,12 +22,19 @@ const Login = () => {
   const [error, setError] = useState("");
   const { login, googleLogIn } = useContext(AuthContext);
 
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = useToken(loginUserEmail);
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const googleProvider = new GoogleAuthProvider();
 
   const from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const handleLogin = (data) => {
     console.log(data);
@@ -35,9 +43,9 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        setLoginUserEmail(data.email);
         setError("");
         toast.success("Account Logged Successfully");
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         setError(error.code.slice(5));

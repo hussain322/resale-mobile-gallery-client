@@ -22,7 +22,7 @@ const DashboardLayout = () => {
             <h1 className="text-center font-semibold text-2xl text-orange-500 shadow-md p-4">
               Dashboard
             </h1>
-            <li>
+            <li className="mt-6">
               <Link to="/dashboard/myOrders">My Orders</Link>
             </li>
             <li>
