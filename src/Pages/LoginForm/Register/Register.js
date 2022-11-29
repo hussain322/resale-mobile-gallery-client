@@ -129,8 +129,8 @@ const Register = () => {
                   {...register("category", { required: true })}
                   className="select select-bordered w-full"
                 >
-                  <option value="buyer">Buyer</option>
-                  <option value="seller">Seller</option>
+                  <option value="Buyer">Buyer</option>
+                  <option value="Seller">Seller</option>
                 </select>
                 {/* Email Field  */}
                 <div className="form-control py-2">

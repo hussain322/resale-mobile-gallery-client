@@ -22,12 +22,13 @@ const MyOrders = () => {
   console.log(bookings);
   return (
     <div>
-      <h1 className="text-2xl font-semibold py-10">
+      <h1 className="text-2xl font-semibold pt-8 pb-4">
         My Orders : {bookings.length}
       </h1>
+      <hr className="bg-black h-[2px]" />
 
       {/* Table  */}
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto w-full my-6">
         <table className="table w-full">
           {/* <!-- head --> */}
           <thead>
