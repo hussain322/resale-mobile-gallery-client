@@ -23,7 +23,7 @@ const Header = () => {
         <Link to="/blog">Blog</Link>
       </li>
       <li className="font-semibold">
-        {user?.uid && <Link to="dashboard">Dashboard</Link>}
+        {user?.uid && <Link to="/dashboard">Dashboard</Link>}
       </li>
       <li className="font-semibold">
         <Link to="/addProduct">Add A Product</Link>

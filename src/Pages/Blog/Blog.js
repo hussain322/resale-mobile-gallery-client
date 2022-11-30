@@ -18,12 +18,12 @@ const Blog = () => {
           <div className="collapse-content">
             <div>
               <b>The Four Kinds of React State to Manage</b>
-              <p>
+              <div>
                 When we talk about state in our applications, it’s important to
                 be clear about what types of state actually matter. <br />
                 There are four main types of state you need to properly manage
                 in your React apps:
-              </p>
+              </div>
               <li>Local State</li>
               <li>Global State</li>
               <li>Server State</li>
@@ -129,7 +129,7 @@ const Blog = () => {
             React vs. Angular vs. Vue?
           </div>
           <div className="collapse-content">
-            <p>
+            <div>
               <strong>React: </strong>
               <p>
                 React offers a Getting Started guide that should help one set up
@@ -142,7 +142,7 @@ const Blog = () => {
                 However, learning to use React does not necessarily mean that
                 you are using the best practices.
               </p>
-            </p>
+            </div>
             <p>
               <strong>Angular: </strong>
               Angular has a steep learning curve, considering it is a complete
@@ -151,7 +151,7 @@ const Blog = () => {
               learn Angular, the investment pays dividends in terms of
               understanding how the front end works.
             </p>
-            <p>
+            <div>
               <strong>Vue: </strong>
               <p>
                 Vue provides higher customizability and hence is easier to learn
@@ -162,7 +162,7 @@ const Blog = () => {
                 a double-edged sword — it allows poor code, making it difficult
                 to debug and test.
               </p>
-            </p>
+            </div>
           </div>
         </div>
       </div>

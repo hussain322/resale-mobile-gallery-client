@@ -17,7 +17,7 @@ const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
     const location = form.location.value;
 
     const buyNow = {
-      _id,
+      product_id: _id,
       customerName: name,
       email,
       productName,

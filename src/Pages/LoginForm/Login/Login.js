@@ -20,17 +20,14 @@ const Login = () => {
   } = useForm();
 
   const [error, setError] = useState("");
+  const [createdLoginEmail, setCreatedLoginEmail] = useState("");
   const { login, googleLogIn } = useContext(AuthContext);
-
-  const [loginUserEmail, setLoginUserEmail] = useState("");
-  const [token] = useToken(loginUserEmail);
-
-  const navigate = useNavigate();
+  const [token] = useToken(createdLoginEmail);
   const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const googleProvider = new GoogleAuthProvider();
-
-  const from = location.state?.from?.pathname || "/";
 
   if (token) {
     navigate(from, { replace: true });
@@ -43,7 +40,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        setLoginUserEmail(data.email);
+        setCreatedLoginEmail(data.email);
         setError("");
         toast.success("Account Logged Successfully");
       })

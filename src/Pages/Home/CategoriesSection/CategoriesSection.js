@@ -3,11 +3,12 @@ import React from "react";
 import CategoryCard from "./CategoryCard";
 
 const CategoriesSection = () => {
-  const { data: categories = [] } = useQuery({
+  const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
       fetch("http://localhost:5000/categories").then((res) => res.json()),
   });
+
   return (
     <div className="py-20 bg-gradient-to-r from-[#7234b3] to-[#873cd6]">
       <h1 className="text-5xl font-bold text-center text-white">Categories</h1>

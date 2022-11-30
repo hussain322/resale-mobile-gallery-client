@@ -18,6 +18,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
   const [error, setError] = useState("");
   const { createUser, updateUser, googleLogIn } = useContext(AuthContext);
   const location = useLocation();
@@ -26,8 +27,8 @@ const Register = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  //verify jwt token
-  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  // jwt
+
   const [token] = useToken(createdUserEmail);
   const navigate = useNavigate();
 
@@ -75,6 +76,18 @@ const Register = () => {
         setCreatedUserEmail(email);
       });
   };
+
+  //Jwt token implement
+  // const getUserToken = (email) => {
+  //   fetch(`http://localhost:5000/jwt?email=${email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.accessToken) {
+  //         localStorage.setItem("accessToken", data.accessToken);
+  //         navigate(from, { replace: true });
+  //       }
+  //     });
+  // };
 
   //Google Login
   const handleGoogleLogin = () => {
