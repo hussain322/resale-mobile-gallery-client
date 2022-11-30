@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthProvider/AuthProvider";
+import useAdmin from "../Hooks/useAdmin";
 import Header from "../Pages/Shared/Header/Header";
 
 const DashboardLayout = () => {
+  const { user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email);
   return (
     <div>
       <Header />
@@ -25,9 +29,11 @@ const DashboardLayout = () => {
             <li className="mt-6">
               <Link to="/dashboard/myOrders">My Orders</Link>
             </li>
-            <li className="">
-              <Link to="/dashboard/allusers">All Users</Link>
-            </li>
+            {isAdmin && (
+              <li className="">
+                <Link to="/dashboard/allusers">All Users</Link>
+              </li>
+            )}
             <li className="">
               <Link to="/dashboard/allsellers">All Sellers</Link>
             </li>
