@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import toast from "react-hot-toast";
 
 const AllUsers = () => {
@@ -26,6 +25,25 @@ const AllUsers = () => {
           toast.success("Make Admin Successful");
           refetch();
         }
+      });
+  };
+
+  const handleDeleteUser = (user) => {
+    console.log(user);
+    fetch(`http://localhost:5000/sellers/${user._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success(`User ${user.name} deleted successfully`);
+          refetch();
+        }
+
+        console.log(data);
       });
   };
   return (
@@ -79,9 +97,13 @@ const AllUsers = () => {
                   )}
                 </td>
                 <th>
-                  <button className="btn btn-xs btn-error text-white font-semibold">
+                  <label
+                    onClick={() => handleDeleteUser(user)}
+                    htmlFor="my-modal"
+                    className="btn btn-xs btn-error text-white font-semibold"
+                  >
                     X
-                  </button>
+                  </label>
                 </th>
               </tr>
             ))}

@@ -25,8 +25,8 @@ const PhoneCard = ({ phone, setPhoneDetails }) => {
           <h2 className="card-title">Name: {name}</h2>
           <div>
             <h6 className="font-semibold">Seller Name: {sellerName}</h6>
-            <h6 className="font-semibold">Original Price: {originalPrice}</h6>
-            <h6 className="font-semibold">Resale Price: {resalePrice}</h6>
+            <h6 className="font-semibold">Original Price: ${originalPrice}</h6>
+            <h6 className="font-semibold">Resale Price: ${resalePrice}</h6>
             <h6 className="font-semibold">Year of use: {used}</h6>
             <h6 className="font-semibold">Condition: {condition}</h6>
             <h6 className="font-semibold">Location: {location}</h6>
