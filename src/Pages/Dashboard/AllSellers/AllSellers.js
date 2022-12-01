@@ -36,6 +36,23 @@ const AllSellers = () => {
         console.log(data);
       });
   };
+
+  const handleVerifySeller = (id) => {
+    fetch(`http://localhost:5000/users/sellerVerify/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          toast.success("Seller Verified Successfully");
+          refetch();
+        }
+      });
+  };
   return (
     <div>
       <h1 className="text-2xl font-semibold pt-8 pb-4">
@@ -61,7 +78,20 @@ const AllSellers = () => {
                 <th>{i + 1}</th>
                 <td>{seller.name}</td>
                 <td>{seller.email}</td>
-                <td>coming soon</td>
+                <td>
+                  {seller?.status ? (
+                    <button className="btn btn-accent btn-xs">
+                      Seller Verified
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleVerifySeller(seller._id)}
+                      className="btn btn-xs"
+                    >
+                      Click to verify seller
+                    </button>
+                  )}
+                </td>
                 <td>
                   <label
                     onClick={() => setDeletingSellers(seller)}

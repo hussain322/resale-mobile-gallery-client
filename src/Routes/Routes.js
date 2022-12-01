@@ -55,15 +55,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/addProduct",
-        element: (
-          <PrivateRoute>
-            <AddProduct />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/myProduct",
-        element: <MyProduct />,
+        element: <AddProduct />,
       },
     ],
   },
@@ -98,6 +90,10 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/allbuyers",
         element: <AllBuyers />,
+      },
+      {
+        path: "/dashboard/myProduct",
+        element: <MyProduct />,
       },
     ],
   },
