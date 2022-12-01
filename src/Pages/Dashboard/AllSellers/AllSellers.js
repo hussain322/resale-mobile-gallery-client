@@ -56,7 +56,7 @@ const AllSellers = () => {
   return (
     <div>
       <h1 className="text-2xl font-semibold pt-8 pb-4">
-        My Sellers : {sellers.length}
+        All Sellers : {sellers.length}
       </h1>
       <hr className="bg-black h-[2px]" />
 

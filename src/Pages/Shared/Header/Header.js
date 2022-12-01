@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import useSeller from "../../../Hooks/useSeller";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isSeller] = useSeller(user?.email);
 
   const handleLogOut = () => {
     logOut()
@@ -25,9 +27,11 @@ const Header = () => {
       <li className="font-semibold">
         {user?.uid && <Link to="/dashboard">Dashboard</Link>}
       </li>
-      <li className="font-semibold">
-        <Link to="/addProduct">Add A Product</Link>
-      </li>
+      {isSeller && (
+        <li className="font-semibold">
+          <Link to="/addProduct">Add A Product</Link>
+        </li>
+      )}
       <li className="font-semibold">
         <Link to="/profile"> Profile</Link>
       </li>
