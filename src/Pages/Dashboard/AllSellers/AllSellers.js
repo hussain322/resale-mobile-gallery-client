@@ -12,41 +12,45 @@ const AllSellers = () => {
   const { data: sellers = [], refetch } = useQuery({
     queryKey: ["sellers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/sellers");
+      const res = await fetch(
+        "https://resale-market-server-roan.vercel.app/sellers"
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const handleDeleteSeller = (seller) => {
-    console.log(seller);
-    fetch(`http://localhost:5000/sellers/${seller._id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `https://resale-market-server-roan.vercel.app/sellers/${seller._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount > 0) {
           toast.success(`Seller ${seller.name} deleted successfully`);
           refetch();
         }
-
-        console.log(data);
       });
   };
 
   const handleVerifySeller = (id) => {
-    fetch(`http://localhost:5000/users/sellerVerify/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `https://resale-market-server-roan.vercel.app/users/sellerVerify/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount > 0) {
           toast.success("Seller Verified Successfully");
           refetch();

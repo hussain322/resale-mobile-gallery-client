@@ -6,7 +6,9 @@ const CategoriesSection = () => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch("http://localhost:5000/categories").then((res) => res.json()),
+      fetch(
+        "https://resale-market-server-roan.vercel.app/categories"
+      ).then((res) => res.json()),
   });
 
   return (

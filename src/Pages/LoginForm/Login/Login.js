@@ -34,12 +34,10 @@ const Login = () => {
   }
 
   const handleLogin = (data) => {
-    console.log(data);
     //Login
     login(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         setCreatedLoginEmail(data.email);
         setError("");
         toast.success("Account Logged Successfully");

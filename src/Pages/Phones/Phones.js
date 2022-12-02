@@ -11,13 +11,13 @@ const Phones = () => {
   const { data: phones = [] } = useQuery({
     queryKey: ["category"],
     queryFn: () =>
-      fetch(`http://localhost:5000/phones`).then((res) => res.json()),
+      fetch(`https://resale-market-server-roan.vercel.app/phones`).then((res) =>
+        res.json()
+      ),
   });
-  console.log(phones);
   const categoryPhones = phones.filter(
     (p) => p.categoryName === category.categoryName
   );
-  console.log(categoryPhones);
 
   return (
     <div className="bg-purple-200">

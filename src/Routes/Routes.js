@@ -53,7 +53,9 @@ const routes = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/category/${params.id}`),
+          fetch(
+            `https://resale-market-server-roan.vercel.app/category/${params.id}`
+          ),
       },
       {
         path: "/addProduct",
@@ -113,7 +115,9 @@ const routes = createBrowserRouter([
         path: "/dashboard/payment/:id",
         element: <Payment />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/bookings/${params.id}`),
+          fetch(
+            `https://resale-market-server-roan.vercel.app/bookings/${params.id}`
+          ),
       },
     ],
   },

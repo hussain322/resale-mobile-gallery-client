@@ -32,9 +32,6 @@ const Header = () => {
           <Link to="/addProduct">Add A Product</Link>
         </li>
       )}
-      <li className="font-semibold">
-        <Link to="/profile"> Profile</Link>
-      </li>
     </>
   );
   return (

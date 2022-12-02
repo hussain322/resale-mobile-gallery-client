@@ -6,15 +6,16 @@ const AllBuyers = () => {
   const { data: buyers = [], refetch } = useQuery({
     queryKey: ["buyers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/buyers");
+      const res = await fetch(
+        "https://resale-market-server-roan.vercel.app/buyers"
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const handleDeleteSeller = (buyer) => {
-    console.log(buyer);
-    fetch(`http://localhost:5000/sellers/${buyer._id}`, {
+    fetch(`https://resale-market-server-roan.vercel.app/sellers/${buyer._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -23,11 +24,9 @@ const AllBuyers = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount > 0) {
-          toast.success(`Seller ${buyer.name} deleted successfully`);
+          toast.success(`Buyer ${buyer.name} deleted successfully`);
           refetch();
         }
-
-        console.log(data);
       });
   };
   return (

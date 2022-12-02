@@ -8,17 +8,20 @@ const CheckoutForm = ({ booking }) => {
   const [cardError, setCardError] = useState("");
   const stripe = useStripe();
   const elements = useElements();
-  const { price, email, customerName } = booking;
+  const { price, email, customerName, _id } = booking;
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({ price }),
-    })
+    fetch(
+      "https://resale-market-server-roan.vercel.app/create-payment-intent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({ price }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [price]);
@@ -38,7 +41,6 @@ const CheckoutForm = ({ booking }) => {
       card,
     });
     if (error) {
-      console.log(error);
       setCardError(error.message);
     } else {
       setCardError("");
@@ -64,10 +66,28 @@ const CheckoutForm = ({ booking }) => {
       return;
     }
     if (paymentIntent.status === "succeeded") {
-      setSuccess("Congrats! Your payment succeeded");
+      // Store payment info in database
+      const paymentInfo = {
+        customerName,
+        email,
+        price,
+        bookingId: _id,
+        paymentStatus: paymentIntent.status,
+        transactionId: paymentIntent.id,
+      };
+      fetch("https://resale-market-server-roan.vercel.app/payments", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(paymentInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setSuccess("Congrats! Your payment succeeded");
+        });
     }
     setProcessing(false);
-    console.log("paymentIntent", paymentIntent);
   };
   return (
     <>

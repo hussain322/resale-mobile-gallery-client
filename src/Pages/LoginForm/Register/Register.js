@@ -37,7 +37,6 @@ const Register = () => {
   }
 
   const handleLogin = (data) => {
-    console.log(data);
     createUser(data.email, data.password)
       .then((result) => {
         setError("");
@@ -63,7 +62,7 @@ const Register = () => {
 
   const saveUserInfo = (email, name, category) => {
     const user = { email, name, category };
-    fetch("http://localhost:5000/users", {
+    fetch("https://resale-market-server-roan.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -76,18 +75,6 @@ const Register = () => {
         setCreatedUserEmail(email);
       });
   };
-
-  //Jwt token implement
-  // const getUserToken = (email) => {
-  //   fetch(`http://localhost:5000/jwt?email=${email}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.accessToken) {
-  //         localStorage.setItem("accessToken", data.accessToken);
-  //         navigate(from, { replace: true });
-  //       }
-  //     });
-  // };
 
   //Google Login
   const handleGoogleLogin = () => {

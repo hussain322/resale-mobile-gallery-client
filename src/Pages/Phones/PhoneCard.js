@@ -41,7 +41,7 @@ const PhoneCard = ({ phone, setPhoneDetails }) => {
               htmlFor="buy-now-modal"
               className="btn btn-primary px-10"
             >
-              Buy Now
+              Order Now
             </label>
           </div>
         </div>

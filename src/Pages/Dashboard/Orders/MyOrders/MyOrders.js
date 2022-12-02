@@ -5,7 +5,7 @@ import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
-  const url = `http://localhost:5000/bookings?email=${user?.email}`;
+  const url = `https://resale-market-server-roan.vercel.app/bookings?email=${user?.email}`;
 
   const { data: bookings = [] } = useQuery({
     queryKey: ["bookings", user?.email],
@@ -19,7 +19,6 @@ const MyOrders = () => {
       return data;
     },
   });
-  console.log(bookings);
   return (
     <div>
       <h1 className="text-2xl font-semibold pt-8 pb-4">
@@ -71,13 +70,15 @@ const MyOrders = () => {
                 <th>
                   {book?.price && !book?.paid && (
                     <Link to={`/dashboard/payment/${book._id}`}>
-                      <button className="btn btn-success btn-sm text-white">
+                      <button className="btn btn-info btn-sm text-white">
                         Pay
                       </button>
                     </Link>
                   )}
                   {book.price && book.paid && (
-                    <span className="bg-success p-4 text-white">Paid</span>
+                    <span className="bg-success px-8 rounded-md py-2 text-white">
+                      Paid
+                    </span>
                   )}
                 </th>
               </tr>

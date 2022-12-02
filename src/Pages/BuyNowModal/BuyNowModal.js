@@ -27,9 +27,7 @@ const BuyNowModal = ({ phoneDetails, setPhoneDetails }) => {
       img,
     };
 
-    console.log(buyNow);
-
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://resale-market-server-roan.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",

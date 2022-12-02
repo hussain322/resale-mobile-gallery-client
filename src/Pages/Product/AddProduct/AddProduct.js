@@ -37,9 +37,8 @@ const AddProduct = () => {
       createdTime,
       sellerName: user.displayName,
     };
-    console.log(productInfo);
 
-    fetch("http://localhost:5000/addProduct", {
+    fetch("https://resale-market-server-roan.vercel.app/addProduct", {
       method: "POST",
       headers: {
         "content-type": "application/json",

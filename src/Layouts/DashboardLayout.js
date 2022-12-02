@@ -28,7 +28,7 @@ const DashboardLayout = () => {
           <ul className="menu p-4 w-80 bg-purple-100 text-base-content">
             {/* <!-- Sidebar content here --> */}
             <h1 className="text-center font-semibold text-2xl text-orange-500 shadow-md p-4">
-              Dashboard
+              <Link to="/dashboard">Dashboard</Link>
             </h1>
             {isBuyer && (
               <li className="mt-6">
